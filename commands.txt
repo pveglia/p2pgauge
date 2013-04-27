@@ -1,0 +1,11 @@
+# Bittorrent
+sudo ./P2PDemo.py -a 192.168.144.52 -r bittorent_ubuntu.pcap -p 49437 -C `pwd`
+
+# PPLive
+sudo ./P2PDemo.py -a 192.168.144.52 -r bittorent_ubuntu.pcap -p 7773 -C `pwd`
+
+# TVAnts
+sudo ./P2PDemo.py -a 192.168.144.52 -r bittorent_ubuntu.pcap -p 16800 -C `pwd`
+
+# SopCast
+sudo ./P2PDemo.py -a 192.168.144.52 -r bittorent_ubuntu.pcap -p 7531 -C `pwd`

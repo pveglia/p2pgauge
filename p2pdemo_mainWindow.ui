@@ -1,0 +1,334 @@
+<ui version="4.0" >
+ <class>p2p_mainWindow</class>
+ <widget class="QMainWindow" name="p2p_mainWindow" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>697</width>
+    <height>721</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>P2PGauge</string>
+  </property>
+  <widget class="QWidget" name="centralwidget" >
+   <property name="geometry" >
+    <rect>
+     <x>0</x>
+     <y>30</y>
+     <width>697</width>
+     <height>668</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout" >
+    <item>
+     <widget class="Line" name="line_2" >
+      <property name="orientation" >
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTabWidget" name="CentralTabview" >
+      <property name="minimumSize" >
+       <size>
+        <width>668</width>
+        <height>582</height>
+       </size>
+      </property>
+      <property name="currentIndex" >
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="conf_tab" >
+       <property name="geometry" >
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>664</width>
+         <height>622</height>
+        </rect>
+       </property>
+       <attribute name="title" >
+        <string>demo.conf</string>
+       </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout_3" >
+        <item>
+         <widget class="Line" name="line" >
+          <property name="orientation" >
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout" >
+          <item>
+           <widget class="QLabel" name="label_4" >
+            <property name="text" >
+             <string>Monitored socket</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_2" >
+            <item>
+             <widget class="QLabel" name="label" >
+              <property name="text" >
+               <string>IP </string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="self_ip" >
+              <property name="enabled" >
+               <bool>true</bool>
+              </property>
+              <property name="frame" >
+               <bool>true</bool>
+              </property>
+              <property name="readOnly" >
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_8" >
+              <property name="text" >
+               <string>Port</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="self_port" >
+              <property name="enabled" >
+               <bool>true</bool>
+              </property>
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+                <horstretch>30</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize" >
+               <size>
+                <width>50</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="styleSheet" >
+               <string notr="true" />
+              </property>
+              <property name="readOnly" >
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_5" >
+              <property name="text" >
+               <string>Pub IP </string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="pub_ip" >
+              <property name="enabled" >
+               <bool>true</bool>
+              </property>
+              <property name="readOnly" >
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_3" >
+              <property name="text" >
+               <string>AS</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="self_as" >
+              <property name="enabled" >
+               <bool>true</bool>
+              </property>
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+                <horstretch>30</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize" >
+               <size>
+                <width>50</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize" >
+               <size>
+                <width>300</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="readOnly" >
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_2" >
+              <property name="text" >
+               <string>CC</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="self_cc" >
+              <property name="enabled" >
+               <bool>true</bool>
+              </property>
+              <property name="sizePolicy" >
+               <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+                <horstretch>20</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize" >
+               <size>
+                <width>30</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize" >
+               <size>
+                <width>200</width>
+                <height>16777214</height>
+               </size>
+              </property>
+              <property name="readOnly" >
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QTableWidget" name="port_table" >
+            <property name="layoutDirection" >
+             <enum>Qt::LeftToRight</enum>
+            </property>
+            <property name="editTriggers" >
+             <set>QAbstractItemView::NoEditTriggers</set>
+            </property>
+            <property name="tabKeyNavigation" >
+             <bool>true</bool>
+            </property>
+            <property name="showDropIndicator" stdset="0" >
+             <bool>false</bool>
+            </property>
+            <property name="dragDropOverwriteMode" >
+             <bool>false</bool>
+            </property>
+            <property name="alternatingRowColors" >
+             <bool>true</bool>
+            </property>
+            <property name="selectionMode" >
+             <enum>QAbstractItemView::SingleSelection</enum>
+            </property>
+            <property name="selectionBehavior" >
+             <enum>QAbstractItemView::SelectRows</enum>
+            </property>
+            <property name="showGrid" >
+             <bool>false</bool>
+            </property>
+            <property name="gridStyle" >
+             <enum>Qt::SolidLine</enum>
+            </property>
+            <property name="sortingEnabled" >
+             <bool>false</bool>
+            </property>
+            <property name="wordWrap" >
+             <bool>true</bool>
+            </property>
+            <property name="cornerButtonEnabled" >
+             <bool>false</bool>
+            </property>
+            <property name="rowCount" >
+             <number>0</number>
+            </property>
+            <property name="columnCount" >
+             <number>4</number>
+            </property>
+            <column>
+             <property name="text" >
+              <string>Port</string>
+             </property>
+            </column>
+            <column>
+             <property name="text" >
+              <string>Packets</string>
+             </property>
+            </column>
+            <column>
+             <property name="text" >
+              <string>Bytes</string>
+             </property>
+            </column>
+            <column>
+             <property name="text" >
+              <string>Rate (Kb/s)</string>
+             </property>
+            </column>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="snapshotButton" >
+            <property name="sizePolicy" >
+             <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text" >
+             <string>Snapshot</string>
+            </property>
+            <property name="icon" >
+             <iconset resource="icons.qrc" >
+              <normaloff>:/icons/icons/Snapshot.png</normaloff>:/icons/icons/Snapshot.png</iconset>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar" >
+   <property name="geometry" >
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>697</width>
+     <height>30</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar" >
+   <property name="geometry" >
+    <rect>
+     <x>0</x>
+     <y>698</y>
+     <width>697</width>
+     <height>23</height>
+    </rect>
+   </property>
+  </widget>
+ </widget>
+ <resources>
+  <include location="icons.qrc" />
+ </resources>
+ <connections/>
+</ui>

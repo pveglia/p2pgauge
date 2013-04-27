@@ -1,0 +1,41 @@
+#!/usr/bin/perl
+
+use lib "$ENV{'HOME'}/.DiaNa/DiaNa";
+
+     $trace = pop @ARGV;
+     die "Unexistent $trace" unless -e $trace;
+
+     $tcpdump = ( `file -L $trace` =~ m/gzip/ ) ? 
+	     "zcat $trace | tcpdump.timesize -r - @ARGV |" :
+ 	     "tcpdump.timesize -r $trace @ARGV  |";
+
+     print STDERR "$tcpdump";	
+     open TCPDUMP, "$tcpdump"
+	     or die "Cannot open `$tcpdump` pipe";
+
+     $fname = $trace;
+     $fname =~ s/\.dump//; 
+     $fname =~ s/\.gz//; 
+
+
+open SIZE, "| d.histo -f1 size.$fname.cdf -x1 -X0:1:1500";
+open TIME, "| d.histo -f1 time.$fname.cdf -x1 -X0:1:1e3";
+
+
+{ 
+   $SIG{QUIT} = sub { $interrupted=1 };
+
+   PKT:
+   while(<TCPDUMP>) {
+        last PKT if $interrupted;
+        chomp;
+	($delta,$size)=split;
+	print SIZE "$size\n";
+	print TIME "$delta\n";
+	print "\r$.";
+
+   }
+   close TCPDUMP;
+   close SIZE;
+   close TIME;
+}

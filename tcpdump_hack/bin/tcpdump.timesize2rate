@@ -1,0 +1,64 @@
+#! /usr/bin/perl -s
+
+#===============================================
+#  timesize2rate -t=timewindow  (msec, MANDATORY) 
+#-----------------------------------------------
+#  reads inter-packet gap (usec) packet size (bytes)
+#  from stdin, prints time (sec) rate (Mbps)
+#-----------------------------------------------
+
+
+$tau = $t * 1000;
+$tau or die $0. `head -n15 $0`;
+
+$my=1e99;
+$My=-1e99;
+$mean = 0;
+$pseudovar = 0;
+
+while(<>) {
+  chomp;
+  ($time,$size) = split;
+
+  $s += $size;
+  $t += $time;
+  
+  
+  if ( $t >= $tau ) {
+    $T += $t/1e6;
+    $y = (8*$s/$t);
+    print "$T $y\n";
+
+    $n++;
+
+    $oldmean = $mean;
+    $mean += ($y - $oldmean) / $n;
+    $pseudovar += ($y - $oldmean) * ( $y - $mean );
+
+    $my = ( $y<$my ) ? $y : $my;
+    $My = ( $y>$My ) ? $y : $My;
+
+    $s = 0;
+    $t = 0;
+  }
+  last if $N && $n>=$N; #for test only
+}
+$a = 1/($My-$my);
+$b = -0.5 -$my*$a;
+$stdev  = sqrt( $pseudovar / ($n-1) );
+
+$str="#statistics about the series
+samples= $n
+min= 	 $my
+max=     $My
+mean=    $mean 
+stdev=   $stdev
+#normalization in (-0.5,0.5) xnorm=a*x+b
+a=	 $a
+b=	 $b
+#also written in timesize2rate.log";
+
+print STDERR $str;
+open LOG, ">timesize2rate.log"; 
+print LOG "$str"; 
+close LOG; 

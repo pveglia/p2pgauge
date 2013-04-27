@@ -1,0 +1,1 @@
+tcpdump.cat  $* |  awk '(NR==1) { lasttime=$1 } (NR>=1) {printf "%.0f %d\n", ($1-lasttime)*1e6, $2; lasttime=$1}' | asc2bin > trace.bin

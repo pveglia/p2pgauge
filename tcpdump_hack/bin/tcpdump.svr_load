@@ -1,0 +1,96 @@
+#! /usr/bin/perl -ws 
+$W ||= 1;
+$F ||= "TCP";
+
+
+open PKT, "tcpdump.cat @ARGV |"
+	or die "Cannot use tcpdump.hack on @ARGV";
+
+if ($F eq 'ALL') { 
+print "#time bitrate ptcp pudp poth nflows ntcp nudp noth\n";
+} elsif ($F eq 'TCP') { 
+print "#time bitrate tcp% nflows tcp%\n";
+}    
+
+while(<PKT>) {
+# 0.000011 1356 UDP 10.0.127.17 11111 239.113.1.6 11111
+# 0.000028 1356 UDP 10.0.127.17 11111 239.113.1.6 11111
+# 0.000006 52 TCP 87.5.176.219 4662 41.2.224.77 1469
+# 0.000016 1500 TCP 1.7.251.108 4662 41.3.108.83 4441 
+
+   chomp;
+  ($time, $size, $proto, $saddr, $sport, $daddr, $dport)=split;
+  
+  $.==1 and $oldtime=$time;
+  
+  if ( $proto eq 'TCP' or $proto eq 'UDP') {
+     $fid="$saddr:$sport:$daddr:$dport";
+  
+  } else {
+     $fid="dummy";
+  
+     if ( $proto eq "IPX") {
+        $size = $sport;
+        $size =~ s/\]$//g;
+  	
+     } elsif ( $size =~ m/arp/ )  {	 		
+     	$size = 0;
+	
+     } elsif ( $proto =~ m/\[\|lcc/ )  {
+        $size = $_[-1];
+        $size =~ s/:$//g;
+
+     } elsif ( m/ICMP echo/ )  {	 		
+        $size = $_[-1];
+
+     } elsif ( m/length:?\s*(\d+)[:]?/ )  {	 		
+     	$size = $1;
+
+     }
+     
+     if ( $size !~ m/^\d+$/ ) {
+     	$ignored++;
+	$size=0;
+        # for the moment it does ignore ARP	
+        print STDERR "Ignore<$proto>, size<$size>: $_\n";
+     }	
+
+     $proto = "OTH";
+  }  
+  $size{$proto} += $size;
+  $size{ALL} += $size;
+  
+  $flow{$proto}{"$fid"}++;
+  $flow{ALL}{"$fid"}++;
+  
+  if( $time - $oldtime >= $W) {
+    $bitrate = $size{ALL}*8/($W);
+    $ptcp = $size{TCP}/$size{ALL};
+    $pudp = $size{UDP}/$size{ALL};
+    $poth = $size{OTH}/$size{ALL};
+
+    $nflows = scalar( keys %{ $flow{ALL} } );
+    $ntcp = scalar( keys %{ $flow{TCP} } )/$nflows;
+    $nudp = scalar( keys %{ $flow{UDP} } )/$nflows;
+    $noth = scalar( keys %{ $flow{OTH} } )/$nflows;
+   
+    if ($F eq 'ALL') { 
+    printf  "%f %e %.3f %.3f %.3f %d %.3f %.3f %.3f\n",
+	    $time,
+	    $bitrate, $ptcp, $pudp, $poth, 
+	    $nflows , $ntcp, $nudp, $noth;
+    } elsif ($F eq 'TCP') { 
+    printf  "%f %e %.3f %d %.3f\n",
+	    $time,
+	    $bitrate, $ptcp, 
+	    $nflows , $ntcp;
+    }    
+    	    
+    undef %size;
+    undef %flow;
+    $oldtime = $time;
+  }
+}
+
+print STDERR "Ignored= $ignored\n";
+

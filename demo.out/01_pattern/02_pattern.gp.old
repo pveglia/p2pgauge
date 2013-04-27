@@ -1,0 +1,37 @@
+#! xgp -wp pattern.DATA
+# Created the Tue Apr  1 11:51:26 CEST 2008 with:
+#   ____________________________
+#  /                            \
+# /        xgp        __________/
+# \__________________/.:nonsns:.
+#
+#Happy gnuplotting
+
+set terminal png `cat option`
+set output '02_pattern.png'
+set key top lef Lef  rev 
+set key below
+
+
+set autoscale y
+xmax="`cat xmax.DATA`"
+xmax="`tail -n1 pattern.DATA | cut -f1 -d' '`"
+set xran [xmax-15:xmax]
+
+# ymax="`cat ymax.DATA`"
+# set yran [-ymax:ymax]
+
+set xlab "Demo Time"
+set ylab "Peer Identifier"
+set title "`cat npeers.DATA` Peers"
+# set label 1 "OUT" at 0+0.1*xmax,0.9*ymax 
+# set label 2 "IN"  at 0+0.1*xmax,-0.9*ymax 
+
+set pointsize 0.25
+
+plot \
+'pattern.DATA'	u 1:($2>0 && $3>=512 ? $2:1/0) t 'OUT (>512 Bytes)'	w p lt 1 pt 5 ps 1,\
+'pattern.DATA'	u 1:($2>0 && $3<512  ? $2:1/0) t 'OUT'	w p lt 1 pt 5 ps 0.25,\
+'pattern.DATA'	u 1:($2<0 && $3>=512 ? $2:1/0) t 'IN  (>512 Bytes)'	w p lt 2 pt 5 ps 1,\
+'pattern.DATA'	u 1:($2<0 && $3<512  ? $2:1/0) t 'IN'	w p lt 2 pt 5 ps 0.25 
+

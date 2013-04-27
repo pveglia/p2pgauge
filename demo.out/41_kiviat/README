@@ -1,0 +1,37 @@
+1. the file kiviat.py produces the kiviat.??.gp where ?? is generally a number
+
+2. it reads the configuration from the file kiviat.conf which is a list of
+   
+	...
+    axis_conf_file curves_conf_file.??
+    ...
+
+	so kiviat.py produces a gp for every line of the file
+
+3.  the axis_conf_file contains the list of the axes of the kiviat in the format:  
+
+	...
+	PARAM LABEL MAX
+    ...
+
+	where 
+    - PARAM is the name of the parameter which will be searched in kiviat.DATA
+    - LABEL will be the label in the graph
+    - MAX is the maximum value of the axis, which is also represented on the picture
+
+4. the curves_conf_file contains the list of the curves to be represented
+
+   ...
+   CURVELABEL
+   ...
+
+	where LABEL is the name of the curve
+
+5. data for the graph is read from kiviat.DATA which is in the format
+   
+   [PARAM]_[CURVELABEL] value
+
+	where 
+    - PARAM is the same as the PARAM in the axis_conf_file
+    - CURVELABEL is the same as the CURVELABEL in the curves_conf_file
+    - VALUE is the value to represent

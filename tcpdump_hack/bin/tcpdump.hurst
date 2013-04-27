@@ -1,0 +1,66 @@
+#! /bin/bash
+
+function usage {    
+echo "
+usage:
+	tcpdump.hurst [format] trace.dump[.gz]
+where:
+   format=(serie) 
+	serie to use a textfile (not a pcap trace)
+
+   trace can be compressed	
+"	
+exit
+}
+
+serie=0
+factor=1
+if [ "$1" == "serie" ];
+then
+    shift
+    serie=1
+
+elif [ "$1" == "sec" ];
+then
+    shift
+    factor=1e-6
+
+elif [ "$1" == "-h"  -o $# -le 0 ];
+then
+    usage;
+fi
+
+
+args="$@";
+for k in $*; do	lastarg=$k; done
+args=${args/$lastarg/}
+
+
+OLDPWD=$PWD
+cd $HOME/traffic/Wavelet_Estimation_Tools
+
+
+#Here is the estimate:
+# alpha   0.1178      95% CI: [0.003, 0.232]
+
+function serie {
+  if [ $serie -gt 0 ]
+  then
+     cat $OLDPWD/$lastarg
+  else
+     echo  "tcpdump.cat time $args $OLDPWD/$lastarg  | awk '{ print $1*$factor }'" > /dev/stderr
+     tcpdump.cat time $args $OLDPWD/$lastarg  | awk "{ print \$1*$factor }"
+  fi  
+}
+
+
+serie | grep -v '^-'  |  ./LDestimate
+
+exit
+
+# postprocess
+  | \
+	awk '/alpha/ { alpha=$2;
+	             print "#H alpha 95CI_LO 95CI_HI\n", h=(alpha+1)/2, alpha, $5, $6;
+		   }' | column -t
+

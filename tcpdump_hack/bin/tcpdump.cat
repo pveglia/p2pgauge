@@ -1,0 +1,133 @@
+#! /bin/bash
+
+function usage {    
+echo "
+usage:
+	tcpdump.cat [format] trace.dump[.gz]
+where:
+   format=(fid*|ts|time|size|rate[=DT]|prate[=DT]) 
+	fid:   time, size, proto, saddr, sport, daddr, dport
+	ts:    time size
+	time:  interarrival time in us
+	size:  packet size in bytes
+	rate:  in Mbps, default window DT=1s
+	prate: in pkts, default window DT=1s
+	
+   tracefile can be compressed	
+"	
+exit
+}
+
+# normal tcpdump by default
+field=-1
+algo=0
+tcpdump="tcpdump.hack"
+
+if [ "$1" == "orig" ];
+then
+    shift
+    tcpdump=tcpdump
+
+elif [ "$1" == "ts" ];
+then
+    shift
+    field=0
+
+elif [ "$1" == "time" ];
+then
+    shift
+    field=1
+
+elif [ "$1" == "size" ];
+then
+    shift    
+    field=2
+
+elif [ "${1:0:4}" == "rate" ];
+then
+    algo=rate
+    [ "${1:4:1}" == "=" ] &&  DT=${1##rate=}
+    [ "$DT" == "" ] &&  DT=1 #DT=1; #seconds
+    shift
+
+elif [ "${1:0:5}" == "prate" ];
+then
+    algo=prate
+    [ "${1:5:1}" == "=" ] &&  DT=${1##prate=}
+    [ "$DT" == "" ] &&  DT=1 #DT=1; #seconds
+    shift         
+    
+elif [ "$1" == "-h"  -o $# -le 0 ];
+then
+    usage;
+fi
+
+
+args="$@";
+for k in $*; do	lastarg=$k; done
+args=${args/$lastarg/}
+
+CAT=$( echo $lastarg | perl -ne 'print m/.gz$/ ? "cat" : "zcat"' )
+CAT=cat
+
+case $algo in
+   prate) 
+      $CAT $lastarg | tcpdump.timesize $args -r- | awk -vDT=$DT \
+      	  'BEGIN{ DT*=1e6 } { 
+	      t+=$1; 
+	      p++; 
+	      if(t-oldt>=DT) { 
+		      print p;
+		      oldt=t;
+		      p=0;
+	      }	
+	  }'
+      ;;
+
+   rate) 
+      $CAT $lastarg | tcpdump.timesize $args -r- | awk -vDT=$DT \
+      	  'BEGIN{ DT*=1e6 } { 
+	      t+=$1; 
+	      b+=$2; 
+	      if(t-oldt>=DT) { 
+		      print 8*b/(t-oldt);
+		      oldt=t;
+		      b=0;
+	      }	
+	  }'
+      ;;
+      
+      
+   *) 
+	   if [ $field -ge 0 ];
+	   then
+		   $CAT $lastarg | tcpdump.timesize $args -r- | awk "{ print \$$field }"
+	   else
+	           # so that you may still get original format
+		   $CAT $lastarg | $tcpdump  -r- -tt -n $args
+	   fi	
+    ;;
+esac
+
+
+
+exit
+
+#===============================================
+#  first version
+#-----------------------------------------------
+
+
+zcat $* | tcpdump -c 10000 -r - -tt -n | perl -ane '
+     BEGIN { $| = 1 }     
+     if( m/UDP/ ) {
+	$proto = "UDP";
+	$size = $F[11] + 8;
+     } else {
+	$proto = "TCP";
+	$F[10] =~ m/\d+:\d+\((\d+)\)/;
+	$size = $1 + 40;
+
+     }   
+     printf "%f %-4d %s %-20s %-20s\n", $F[0], $size, $proto, $F[6], $F[8];
+'
