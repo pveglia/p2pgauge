@@ -1,0 +1,367 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>tracepath</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="System Manager's Manual: iputils"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="rarpd"
+HREF="r589.html"><LINK
+REL="NEXT"
+TITLE="traceroute6"
+HREF="r757.html"></HEAD
+><BODY
+CLASS="REFENTRY"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>System Manager's Manual: iputils</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="r589.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="r757.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><H1
+><A
+NAME="TRACEPATH"
+></A
+>tracepath</H1
+><DIV
+CLASS="REFNAMEDIV"
+><A
+NAME="AEN692"
+></A
+><H2
+>Name</H2
+>tracepath, tracepath6&nbsp;--&nbsp;traces path to a network host discovering MTU along this path</DIV
+><DIV
+CLASS="REFSYNOPSISDIV"
+><A
+NAME="AEN695"
+></A
+><H2
+>Synopsis</H2
+><P
+><B
+CLASS="COMMAND"
+>tracepath</B
+>  {<TT
+CLASS="REPLACEABLE"
+><I
+>destination</I
+></TT
+>} [<TT
+CLASS="REPLACEABLE"
+><I
+>port</I
+></TT
+>]</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN702"
+></A
+><H2
+>DESCRIPTION</H2
+><P
+>It traces path to <TT
+CLASS="REPLACEABLE"
+><I
+>destination</I
+></TT
+> discovering MTU along this path.
+It uses UDP port <TT
+CLASS="REPLACEABLE"
+><I
+>port</I
+></TT
+> or some random port.
+It is similar to <B
+CLASS="COMMAND"
+>traceroute</B
+>, only does not not require superuser
+privileges and has no fancy options.</P
+><P
+><B
+CLASS="COMMAND"
+>tracepath6</B
+> is good replacement for <B
+CLASS="COMMAND"
+>traceroute6</B
+>
+and classic example of application of Linux error queues.
+The situation with <B
+CLASS="COMMAND"
+>tracepath</B
+> is worse, because commercial
+IP routers do not return enough information in icmp error messages.
+Probably, it will change, when they will be updated.
+For now it uses Van Jacobson's trick, sweeping a range
+of UDP ports to maintain trace history.</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN712"
+></A
+><H2
+>OUTPUT</H2
+><P
+><P
+CLASS="LITERALLAYOUT"
+>root@mops:~&nbsp;#&nbsp;tracepath6&nbsp;3ffe:2400:0:109::2<br>
+&nbsp;1?:&nbsp;[LOCALHOST]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pmtu&nbsp;1500<br>
+&nbsp;1:&nbsp;&nbsp;dust.inr.ac.ru&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.411ms<br>
+&nbsp;2:&nbsp;&nbsp;dust.inr.ac.ru&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;asymm&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;0.390ms&nbsp;pmtu&nbsp;1480<br>
+&nbsp;2:&nbsp;&nbsp;3ffe:2400:0:109::2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;463.514ms&nbsp;reached<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Resume:&nbsp;pmtu&nbsp;1480&nbsp;hops&nbsp;2&nbsp;back&nbsp;2</P
+></P
+><P
+>The first column shows <TT
+CLASS="LITERAL"
+>TTL</TT
+> of the probe, followed by colon.
+Usually value of <TT
+CLASS="LITERAL"
+>TTL</TT
+> is obtained from reply from network,
+but sometimes reply does not contain necessary information and
+we have to guess it. In this case the number is followed by ?.</P
+><P
+>The second column shows the network hop, which replied to the probe.
+It is either address of router or word <TT
+CLASS="LITERAL"
+>[LOCALHOST]</TT
+>, if
+the probe was not sent to the network.</P
+><P
+>The rest of line shows miscellaneous information about path to
+the correspinding hetwork hop. As rule it contains value of RTT.
+Additionally, it can show Path MTU, when it changes.
+If the path is asymmetric
+or the probe finishes before it reach prescribed hop, difference
+between number of hops in forward and backward direction is shown
+folloing keyword <TT
+CLASS="LITERAL"
+>async</TT
+>. This information is not reliable.
+F.e. the third line shows asymmetry of 1, it is because the first probe
+with TTL of 2 was rejected at the first hop due to Path MTU Discovery.</P
+><P
+>Te last line summarizes information about all the path to the destination,
+it shows detected Path MTU, amount of hops to the destination and our
+guess about amount of hops from the destination to us, which can be
+different when the path is asymmetric.</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN724"
+></A
+><H2
+>SEE ALSO</H2
+><P
+><SPAN
+CLASS="CITEREFENTRY"
+><SPAN
+CLASS="REFENTRYTITLE"
+>traceroute</SPAN
+>(8)</SPAN
+>,
+<A
+HREF="r757.html"
+><SPAN
+CLASS="CITEREFENTRY"
+><SPAN
+CLASS="REFENTRYTITLE"
+>traceroute6</SPAN
+>(8)</SPAN
+></A
+>,
+<A
+HREF="r3.html"
+><SPAN
+CLASS="CITEREFENTRY"
+><SPAN
+CLASS="REFENTRYTITLE"
+>ping</SPAN
+>(8)</SPAN
+></A
+>.</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN738"
+></A
+><H2
+>AUTHOR</H2
+><P
+><B
+CLASS="COMMAND"
+>tracepath</B
+> was written by
+<A
+HREF="mailto:kuznet@ms2.inr.ac.ru"
+TARGET="_top"
+>Alexey Kuznetsov
+&lt;kuznet@ms2.inr.ac.ru&gt;</A
+>.</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN743"
+></A
+><H2
+>SECURITY</H2
+><P
+>No security issues.</P
+><P
+>This lapidary deserves to be elaborated.
+<B
+CLASS="COMMAND"
+>tracepath</B
+> is not a privileged program, unlike
+<B
+CLASS="COMMAND"
+>traceroute</B
+>, <B
+CLASS="COMMAND"
+>ping</B
+> and other beasts of this kind.
+<B
+CLASS="COMMAND"
+>tracepath</B
+> may be executed by everyone who has some access
+to network, enough to send UDP datagrams to investigated destination
+using given port.</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN751"
+></A
+><H2
+>AVAILABILITY</H2
+><P
+><B
+CLASS="COMMAND"
+>tracepath</B
+> is part of <TT
+CLASS="FILENAME"
+>iputils</TT
+> package
+and the latest versions are  available in source form from anonymous ftp
+<A
+HREF="ftp://ftp.inr.ac.ru/ip-routing/iputils-current.tar.gz"
+TARGET="_top"
+>ftp://ftp.inr.ac.ru/ip-routing/iputils-current.tar.gz</A
+>.</P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="r589.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="r757.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>rarpd</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>traceroute6</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

@@ -1,0 +1,376 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>tftpd</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="System Manager's Manual: iputils"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="traceroute6"
+HREF="r757.html"><LINK
+REL="NEXT"
+TITLE="rdisc"
+HREF="r895.html"></HEAD
+><BODY
+CLASS="REFENTRY"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>System Manager's Manual: iputils</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="r757.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="r895.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><H1
+><A
+NAME="TFTPD"
+></A
+>tftpd</H1
+><DIV
+CLASS="REFNAMEDIV"
+><A
+NAME="AEN827"
+></A
+><H2
+>Name</H2
+>tftpd&nbsp;--&nbsp;Trivial File Transfer Protocol server</DIV
+><DIV
+CLASS="REFSYNOPSISDIV"
+><A
+NAME="AEN830"
+></A
+><H2
+>Synopsis</H2
+><P
+><B
+CLASS="COMMAND"
+>tftpd</B
+>  {<TT
+CLASS="REPLACEABLE"
+><I
+>directory</I
+></TT
+>}</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN835"
+></A
+><H2
+>DESCRIPTION</H2
+><P
+><B
+CLASS="COMMAND"
+>tftpd</B
+> is a server which supports the DARPA
+Trivial File Transfer Protocol
+(<A
+HREF="ftp://ftp.isi.edu/in-notes/rfc1350.txt"
+TARGET="_top"
+>RFC1350</A
+>).
+The TFTP server is started
+by <SPAN
+CLASS="CITEREFENTRY"
+><SPAN
+CLASS="REFENTRYTITLE"
+>inetd</SPAN
+>(8)</SPAN
+>.</P
+><P
+><TT
+CLASS="REPLACEABLE"
+><I
+>directory</I
+></TT
+> is required argument; if it is not given
+<B
+CLASS="COMMAND"
+>tftpd</B
+> aborts. This path is prepended to any file name requested
+via TFTP protocol, effectively chrooting <B
+CLASS="COMMAND"
+>tftpd</B
+> to this directory.
+File names are validated not to escape out of this directory, however
+administrator may configure such escape using symbolic links.</P
+><P
+>It is in difference of variants of <B
+CLASS="COMMAND"
+>tftpd</B
+> usually distributed
+with unix-like systems, which take a list of directories and match
+file names to start from one of given prefixes or to some random
+default, when no arguments were given. There are two reasons not to
+behave in this way: first, it is inconvenient, clients are not expected
+to know something about layout of filesystem on server host.
+And second, TFTP protocol is not a tool for browsing of server's filesystem,
+it is just an agent allowing to boot dumb clients. </P
+><P
+>In the case when <B
+CLASS="COMMAND"
+>tftpd</B
+> is used together with
+<A
+HREF="r589.html"
+><SPAN
+CLASS="CITEREFENTRY"
+><SPAN
+CLASS="REFENTRYTITLE"
+>rarpd</SPAN
+>(8)</SPAN
+></A
+>,
+tftp directories in these services should coincide and it is expected
+that each client booted via TFTP has boot image corresponding
+its IP address with an architecture suffix following Sun Microsystems
+conventions. See 
+<A
+HREF="r589.html"
+><SPAN
+CLASS="CITEREFENTRY"
+><SPAN
+CLASS="REFENTRYTITLE"
+>rarpd</SPAN
+>(8)</SPAN
+></A
+>
+for more details.</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN859"
+></A
+><H2
+>SECURITY</H2
+><P
+>TFTP protocol does not provide any authentication.
+Due to this capital flaw <B
+CLASS="COMMAND"
+>tftpd</B
+> is not able to restrict
+access to files and will allow only publically readable
+files to be accessed. Files may be written only if they already
+exist and are publically writable.</P
+><P
+>Impact is evident, directory exported via TFTP <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>must not</I
+></SPAN
+>
+contain sensitive information of any kind, everyone is allowed
+to read it as soon as a client is allowed. Boot images do not contain
+such information as rule, however you should think twice before
+publishing f.e. Cisco IOS config files via TFTP, they contain
+<SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>unencrypted</I
+></SPAN
+> passwords and may contain some information
+about the network, which you were not going to make public.</P
+><P
+>The <B
+CLASS="COMMAND"
+>tftpd</B
+> server should be executed by <B
+CLASS="COMMAND"
+>inetd</B
+>
+with dropped root privileges, namely with a user ID giving minimal
+access to files published in tftp directory. If it is executed
+as superuser occasionally, <B
+CLASS="COMMAND"
+>tftpd</B
+> drops its UID and GID
+to 65534, which is most likely not the thing which you expect.
+However, this is not very essential; remember, only files accessible
+for everyone can be read or written via TFTP.</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN870"
+></A
+><H2
+>SEE ALSO</H2
+><P
+><A
+HREF="r589.html"
+><SPAN
+CLASS="CITEREFENTRY"
+><SPAN
+CLASS="REFENTRYTITLE"
+>rarpd</SPAN
+>(8)</SPAN
+></A
+>,
+<SPAN
+CLASS="CITEREFENTRY"
+><SPAN
+CLASS="REFENTRYTITLE"
+>tftp</SPAN
+>(1)</SPAN
+>,
+<SPAN
+CLASS="CITEREFENTRY"
+><SPAN
+CLASS="REFENTRYTITLE"
+>inetd</SPAN
+>(8)</SPAN
+>.</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN883"
+></A
+><H2
+>HISTORY</H2
+><P
+>The <B
+CLASS="COMMAND"
+>tftpd</B
+> command appeared in 4.2BSD. The source in iputils
+is cleaned up both syntactically (ANSIized) and semantically (UDP socket IO).</P
+><P
+>It is distributed with iputils mostly as good demo of an interesting feature
+(<CODE
+CLASS="CONSTANT"
+>MSG_CONFIRM</CODE
+>) allowing to boot long images by dumb clients
+not answering ARP requests until they are finally booted.
+However, this is full functional and can be used in production.</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN889"
+></A
+><H2
+>AVAILABILITY</H2
+><P
+><B
+CLASS="COMMAND"
+>tftpd</B
+> is part of <TT
+CLASS="FILENAME"
+>iputils</TT
+> package
+and the latest versions are  available in source form for anonymous ftp
+<A
+HREF="ftp://ftp.inr.ac.ru/ip-routing/iputils-current.tar.gz"
+TARGET="_top"
+>ftp://ftp.inr.ac.ru/ip-routing/iputils-current.tar.gz</A
+>.</P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="r757.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="r895.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>traceroute6</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>rdisc</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

@@ -1,0 +1,29 @@
+========================================================================
+||    CapProbe: a simple and accurate capacity estimation technique   ||
+========================================================================
+
+This is a user-level implementation of CapProbe. To install/run this 
+program, you need one Linux machine with Intel CPU and kernel 2.4.20 version.
+
+The installation steps are:
+
+1. change "CPU_HZ" in ping_common.c
+   The default setting is for Intel P4 2.53GZ CPU, and you need to modify it
+   according to the CPU frequency of your linux machine.
+   (The frequency information is available at /proc/cpuinfo)
+
+2. recompile the program
+   just type "make" under "iputils" directory.
+
+3. run experiments
+   ./ping target.host.ip.or.domain_name -i 2 -s 1492
+
+   ps: -i : the interval time (second) between every sample (packet pair)
+       -s : the size (byte) of each packet
+
+
+Any questions/comments are welcome!!
+
+Ling-Jyh Chen (cclljj@cs.ucla.edu)
+PhD student, Department of Computer Science
+University of California at Los Angeles

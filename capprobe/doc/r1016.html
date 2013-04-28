@@ -1,0 +1,428 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>pg3</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="System Manager's Manual: iputils"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="rdisc"
+HREF="r895.html"></HEAD
+><BODY
+CLASS="REFENTRY"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>System Manager's Manual: iputils</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="r895.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+>&nbsp;</TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><H1
+><A
+NAME="PG3"
+></A
+>pg3</H1
+><DIV
+CLASS="REFNAMEDIV"
+><A
+NAME="AEN1021"
+></A
+><H2
+>Name</H2
+>pg3, ipg, pgset&nbsp;--&nbsp;send stream of UDP packets</DIV
+><DIV
+CLASS="REFSYNOPSISDIV"
+><A
+NAME="AEN1024"
+></A
+><H2
+>Synopsis</H2
+><P
+><B
+CLASS="COMMAND"
+>source ipg</B
+> </P
+><P
+><B
+CLASS="COMMAND"
+>pg</B
+> </P
+><P
+><B
+CLASS="COMMAND"
+>pgset</B
+>  {<TT
+CLASS="REPLACEABLE"
+><I
+>COMMAND</I
+></TT
+>}</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN1033"
+></A
+><H2
+>DESCRIPTION</H2
+><P
+><B
+CLASS="COMMAND"
+>ipg</B
+> is not a program, it is script which should be sourced
+to <B
+CLASS="COMMAND"
+>bash</B
+>. When sourced it loads module <TT
+CLASS="FILENAME"
+>pg3</TT
+> and
+exports a few of functions accessible from parent shell. These macros
+are <B
+CLASS="COMMAND"
+>pg</B
+> to start packet injection and to get the results of run;
+and <B
+CLASS="COMMAND"
+>pgset</B
+> to setup packet generator.</P
+><P
+><B
+CLASS="COMMAND"
+>pgset</B
+> can send the following commands to module <TT
+CLASS="FILENAME"
+>pg3</TT
+>:</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN1044"
+></A
+><H2
+>COMMAND</H2
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><CODE
+CLASS="OPTION"
+>odev <TT
+CLASS="REPLACEABLE"
+><I
+>DEVICE</I
+></TT
+></CODE
+></DT
+><DD
+><P
+>Name of Ethernet device to test. See
+<A
+HREF="r1016.html#PG3.WARNING"
+>warning</A
+> below.
+  </P
+></DD
+><DT
+><CODE
+CLASS="OPTION"
+>pkt_size <TT
+CLASS="REPLACEABLE"
+><I
+>BYTES</I
+></TT
+></CODE
+></DT
+><DD
+><P
+>Size of packet to generate. The size includes all the headers: UDP, IP,
+MAC, but does not account for overhead internal to medium, i.e. FCS
+and various paddings.
+  </P
+></DD
+><DT
+><CODE
+CLASS="OPTION"
+>frags <TT
+CLASS="REPLACEABLE"
+><I
+>NUMBER</I
+></TT
+></CODE
+></DT
+><DD
+><P
+>Each packet will contain <TT
+CLASS="REPLACEABLE"
+><I
+>NUMBER</I
+></TT
+> of fragments.
+Maximal amount for linux-2.4 is 6. Far not all the devices support
+fragmented buffers.
+  </P
+></DD
+><DT
+><CODE
+CLASS="OPTION"
+>count <TT
+CLASS="REPLACEABLE"
+><I
+>NUMBER</I
+></TT
+></CODE
+></DT
+><DD
+><P
+>Send stream of <TT
+CLASS="REPLACEABLE"
+><I
+>NUMBER</I
+></TT
+> of packets and stop after this.
+  </P
+></DD
+><DT
+><CODE
+CLASS="OPTION"
+>ipg <TT
+CLASS="REPLACEABLE"
+><I
+>TIME</I
+></TT
+></CODE
+></DT
+><DD
+><P
+>Introduce artificial delay between packets of <TT
+CLASS="REPLACEABLE"
+><I
+>TIME</I
+></TT
+>
+microseconds.
+  </P
+></DD
+><DT
+><CODE
+CLASS="OPTION"
+>dst <TT
+CLASS="REPLACEABLE"
+><I
+>IP_ADDRESS</I
+></TT
+></CODE
+></DT
+><DD
+><P
+>Select IP destination where the stream is sent to.
+Beware, never set this address at random. <B
+CLASS="COMMAND"
+>pg3</B
+> is not a toy,
+it creates really tough stream. Default value is 0.0.0.0.
+  </P
+></DD
+><DT
+><CODE
+CLASS="OPTION"
+>dst <TT
+CLASS="REPLACEABLE"
+><I
+>MAC_ADDRESS</I
+></TT
+></CODE
+></DT
+><DD
+><P
+>Select MAC destination where the stream is sent to.
+Default value is 00:00:00:00:00:00 in hope that this will not be received
+by any node on LAN.
+  </P
+></DD
+><DT
+><CODE
+CLASS="OPTION"
+>stop</CODE
+></DT
+><DD
+><P
+>Abort packet injection.
+  </P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="PG3.WARNING"
+></A
+><H2
+>WARNING</H2
+><P
+>When output device is set to some random device different
+of hardware Ethernet device, <B
+CLASS="COMMAND"
+>pg3</B
+> will crash kernel.</P
+><P
+>Do not use it on VLAN, ethertap, VTUN and other devices,
+which emulate Ethernet not being real Ethernet in fact.</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN1104"
+></A
+><H2
+>AUTHOR</H2
+><P
+><B
+CLASS="COMMAND"
+>pg3</B
+> was written by <A
+HREF="mailto:robert.olsson@its.uu.se"
+TARGET="_top"
+>Robert Olsson &lt;robert.olsson@its.uu.se&gt;</A
+>.</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN1109"
+></A
+><H2
+>SECURITY</H2
+><P
+>This can be used only by superuser.</P
+><P
+>This tool creates floods of packets which is unlikely to be handled
+even by high-end machines. For example, it saturates gigabit link with
+60 byte packets when used with Intel's e1000. In face of such stream
+switches, routers and end hosts may deadlock, crash, explode.
+Use only in test lab environment.</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN1113"
+></A
+><H2
+>AVAILABILITY</H2
+><P
+><B
+CLASS="COMMAND"
+>pg3</B
+> is part of <TT
+CLASS="FILENAME"
+>iputils</TT
+> package
+and the latest versions are  available in source form for anonymous ftp
+<A
+HREF="ftp://ftp.inr.ac.ru/ip-routing/iputils-current.tar.gz"
+TARGET="_top"
+>ftp://ftp.inr.ac.ru/ip-routing/iputils-current.tar.gz</A
+>.</P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="r895.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>&nbsp;</TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>rdisc</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>&nbsp;</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

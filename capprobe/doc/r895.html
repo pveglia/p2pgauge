@@ -1,0 +1,504 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>rdisc</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="System Manager's Manual: iputils"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="tftpd"
+HREF="r822.html"><LINK
+REL="NEXT"
+TITLE="pg3"
+HREF="r1016.html"></HEAD
+><BODY
+CLASS="REFENTRY"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>System Manager's Manual: iputils</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="r822.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="r1016.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><H1
+><A
+NAME="RDISC"
+></A
+>rdisc</H1
+><DIV
+CLASS="REFNAMEDIV"
+><A
+NAME="AEN900"
+></A
+><H2
+>Name</H2
+>rdisc&nbsp;--&nbsp;network router discovery daemon</DIV
+><DIV
+CLASS="REFSYNOPSISDIV"
+><A
+NAME="AEN903"
+></A
+><H2
+>Synopsis</H2
+><P
+><B
+CLASS="COMMAND"
+>rdisc</B
+>  [<CODE
+CLASS="OPTION"
+>-abdfstvV</CODE
+>] [<TT
+CLASS="REPLACEABLE"
+><I
+>send_address</I
+></TT
+>] [<TT
+CLASS="REPLACEABLE"
+><I
+>receive_address</I
+></TT
+>]</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN912"
+></A
+><H2
+>DESCRIPTION</H2
+><P
+><B
+CLASS="COMMAND"
+>rdisc</B
+> implements client side of the ICMP router discover protocol.
+<B
+CLASS="COMMAND"
+>rdisc</B
+> is invoked at boot time to populate the network
+routing tables with default routes. </P
+><P
+><B
+CLASS="COMMAND"
+>rdisc</B
+> listens on the ALL_HOSTS (224.0.0.1) multicast address
+(or <TT
+CLASS="REPLACEABLE"
+><I
+>receive_address</I
+></TT
+> provided it is given) 
+for ROUTER_ADVERTISE messages from routers. The received
+messages are handled by first ignoring those listed router addresses
+with which the host does not share a network. Among the remaining addresses
+the ones with the highest preference are selected as default routers
+and a default route is entered in the kernel routing table
+for each one of them.</P
+><P
+>Optionally, <B
+CLASS="COMMAND"
+>rdisc</B
+> can avoid waiting for routers to announce 
+themselves by sending out a few ROUTER_SOLICITATION messages
+to the ALL_ROUTERS (224.0.0.2) multicast address 
+(or <TT
+CLASS="REPLACEABLE"
+><I
+>send_address</I
+></TT
+> provided it is given) 
+when it is started.</P
+><P
+>A timer is associated with each router address and the address will
+no longer be considered for inclusion in the the routing tables if the 
+timer expires before a new 
+<SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>advertise</I
+></SPAN
+> message is received from the router.
+The address will also be excluded from consideration if the host receives an 
+<SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>advertise</I
+></SPAN
+>
+message with the preference being maximally negative.</P
+><P
+>Server side of router discovery protocol is supported by Cisco IOS
+and by any more or less complete UNIX routing daemon, f.e <B
+CLASS="COMMAND"
+>gated</B
+>.</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN928"
+></A
+><H2
+>OPTIONS</H2
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><CODE
+CLASS="OPTION"
+>-a</CODE
+></DT
+><DD
+><P
+>Accept all routers independently of the preference they have in their 
+<SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>advertise</I
+></SPAN
+> messages.
+Normally <B
+CLASS="COMMAND"
+>rdisc</B
+> only accepts (and enters in the kernel routing
+tables) the router or routers with the highest preference.
+  </P
+></DD
+><DT
+><CODE
+CLASS="OPTION"
+>-b</CODE
+></DT
+><DD
+><P
+>Opposite to <CODE
+CLASS="OPTION"
+>-a</CODE
+>, i.e. install only router with the best
+preference value. It is default behaviour.
+  </P
+></DD
+><DT
+><CODE
+CLASS="OPTION"
+>-d</CODE
+></DT
+><DD
+><P
+>Send debugging messages to syslog.
+  </P
+></DD
+><DT
+><CODE
+CLASS="OPTION"
+>-f</CODE
+></DT
+><DD
+><P
+>Run <B
+CLASS="COMMAND"
+>rdisc</B
+> forever even if no routers are found.
+Normally <B
+CLASS="COMMAND"
+>rdisc</B
+> gives up if it has not received any 
+<SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>advertise</I
+></SPAN
+> message after after soliciting three times,
+in which case it exits with a non-zero exit code.
+If <CODE
+CLASS="OPTION"
+>-f</CODE
+> is not specified in the first form then 
+<CODE
+CLASS="OPTION"
+>-s</CODE
+> must be specified.
+  </P
+></DD
+><DT
+><CODE
+CLASS="OPTION"
+>-s</CODE
+></DT
+><DD
+><P
+>Send three <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>solicitation</I
+></SPAN
+> messages initially to quickly discover
+the routers when the system is booted.
+When <CODE
+CLASS="OPTION"
+>-s</CODE
+> is specified <B
+CLASS="COMMAND"
+>rdisc</B
+>
+exits with a non-zero exit code if it can not find any routers.
+This can be overridden with the <CODE
+CLASS="OPTION"
+>-f</CODE
+> option.
+  </P
+></DD
+><DT
+><CODE
+CLASS="OPTION"
+>-t</CODE
+></DT
+><DD
+><P
+>Test mode. Do not go to background.
+  </P
+></DD
+><DT
+><CODE
+CLASS="OPTION"
+>-v</CODE
+></DT
+><DD
+><P
+>Be verbose i.e. send lots of debugging messages to syslog.
+  </P
+></DD
+><DT
+><CODE
+CLASS="OPTION"
+>-V</CODE
+></DT
+><DD
+><P
+>Print version and exit.
+  </P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN983"
+></A
+><H2
+>HISTORY</H2
+><P
+>This program was developed by Sun Microsystems (see copyright
+notice in source file). It was ported to Linux by
+<A
+HREF="mailto:kuznet@ms2.inr.ac.ru"
+TARGET="_top"
+>Alexey Kuznetsov
+&lt;kuznet@ms2.inr.ac.ru&gt;</A
+>.</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN987"
+></A
+><H2
+>SEE ALSO</H2
+><P
+><SPAN
+CLASS="CITEREFENTRY"
+><SPAN
+CLASS="REFENTRYTITLE"
+>icmp</SPAN
+>(7)</SPAN
+>,
+<SPAN
+CLASS="CITEREFENTRY"
+><SPAN
+CLASS="REFENTRYTITLE"
+>inet</SPAN
+>(7)</SPAN
+>,
+<A
+HREF="r3.html"
+><SPAN
+CLASS="CITEREFENTRY"
+><SPAN
+CLASS="REFENTRYTITLE"
+>ping</SPAN
+>(8)</SPAN
+></A
+>.</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN1000"
+></A
+><H2
+>REFERENCES</H2
+><P
+>Deering, S.E.,ed "ICMP Router Discovery Messages",
+<A
+HREF="ftp://ftp.isi.edu/in-notes/rfc1256.txt"
+TARGET="_top"
+>RFC1256</A
+>, Network Information Center, SRI International,
+Menlo Park, Calif., September 1991.</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN1004"
+></A
+><H2
+>SECURITY</H2
+><P
+><B
+CLASS="COMMAND"
+>rdisc</B
+> requires <CODE
+CLASS="CONSTANT"
+>CAP_NET_RAWIO</CODE
+> to listen
+and send ICMP messages and capability <CODE
+CLASS="CONSTANT"
+>CAP_NET_ADMIN</CODE
+>
+to update routing tables. </P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN1010"
+></A
+><H2
+>AVAILABILITY</H2
+><P
+><B
+CLASS="COMMAND"
+>rdisc</B
+> is part of <TT
+CLASS="FILENAME"
+>iputils</TT
+> package
+and the latest versions are  available in source form for anonymous ftp
+<A
+HREF="ftp://ftp.inr.ac.ru/ip-routing/iputils-current.tar.gz"
+TARGET="_top"
+>ftp://ftp.inr.ac.ru/ip-routing/iputils-current.tar.gz</A
+>.</P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="r822.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="r1016.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>tftpd</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>pg3</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

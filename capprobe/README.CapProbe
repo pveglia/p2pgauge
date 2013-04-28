@@ -1,0 +1,16 @@
+CapProbe implementation (for INTEL CPU only)
+  -- round-trip, active version     by Ling-Jyh Chen, 2004
+
+Please remember to change CPU_HZ (in ping_common.c) to 
+your CPU frequency value. The information can be found 
+in /proc/cpuinfo
+
+
+USAGE: ./ping IP_ADDR -i INTERVAL_VALUE -s PK_SIZE
+
+IP_ADDR: the IP address of the other end host
+INTERVAL_VALUE: the time interval between packet pairs (seconds)
+PK_SIZE: packet size of each packet (bytes)
+
+Note that both machines must be "PINGable" from the Internet!
+

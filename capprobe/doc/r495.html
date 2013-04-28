@@ -1,0 +1,421 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>clockdiff</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="System Manager's Manual: iputils"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="arping"
+HREF="r337.html"><LINK
+REL="NEXT"
+TITLE="rarpd"
+HREF="r589.html"></HEAD
+><BODY
+CLASS="REFENTRY"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>System Manager's Manual: iputils</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="r337.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="r589.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><H1
+><A
+NAME="CLOCKDIFF"
+></A
+>clockdiff</H1
+><DIV
+CLASS="REFNAMEDIV"
+><A
+NAME="AEN500"
+></A
+><H2
+>Name</H2
+>clockdiff&nbsp;--&nbsp;measure clock difference between hosts</DIV
+><DIV
+CLASS="REFSYNOPSISDIV"
+><A
+NAME="AEN503"
+></A
+><H2
+>Synopsis</H2
+><P
+><B
+CLASS="COMMAND"
+>clockdiff</B
+>  [<CODE
+CLASS="OPTION"
+>-o</CODE
+>] [<CODE
+CLASS="OPTION"
+>-o1</CODE
+>] {<TT
+CLASS="REPLACEABLE"
+><I
+>destination</I
+></TT
+>}</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN512"
+></A
+><H2
+>DESCRIPTION</H2
+><P
+><B
+CLASS="COMMAND"
+>clockdiff</B
+> Measures clock difference between us and
+<TT
+CLASS="REPLACEABLE"
+><I
+>destination</I
+></TT
+> with 1 msec resolution using ICMP TIMESTAMP
+<A
+HREF="r495.html#CLOCKDIFF.ICMP-TIMESTAMP"
+>[2]</A
+>
+packets or, optionally, IP TIMESTAMP option
+<A
+HREF="r495.html#CLOCKDIFF.IP-TIMESTAMP"
+>[3]</A
+>
+option added to ICMP ECHO.
+<A
+HREF="r495.html#CLOCKDIFF.ICMP-ECHO"
+>[1]</A
+></P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN520"
+></A
+><H2
+>OPTIONS</H2
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><CODE
+CLASS="OPTION"
+>-o</CODE
+></DT
+><DD
+><P
+>Use IP TIMESTAMP with ICMP ECHO instead of ICMP TIMESTAMP
+messages. It is useful with some destinations, which do not support
+ICMP TIMESTAMP (f.e. Solaris &lt;2.4).
+  </P
+></DD
+><DT
+><CODE
+CLASS="OPTION"
+>-o1</CODE
+></DT
+><DD
+><P
+>Slightly different form of <CODE
+CLASS="OPTION"
+>-o</CODE
+>, namely it uses three-term
+IP TIMESTAMP with prespecified hop addresses instead of four term one.
+What flavor works better depends on target host. Particularly,
+<CODE
+CLASS="OPTION"
+>-o</CODE
+> is better for Linux.
+  </P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN535"
+></A
+><H2
+>WARNINGS</H2
+><P
+></P
+><UL
+><LI
+><P
+>Some nodes (Cisco) use non-standard timestamps, which is allowed
+by RFC, but makes timestamps mostly useless.
+ </P
+></LI
+><LI
+><P
+>Some nodes generate messed timestamps (Solaris&gt;2.4), when
+run <B
+CLASS="COMMAND"
+>xntpd</B
+>. Seems, its IP stack uses a corrupted clock source,
+which is synchronized to time-of-day clock periodically and jumps
+randomly making timestamps mostly useless. Good news is that you can
+use NTP in this case, which is even better.
+ </P
+></LI
+><LI
+><P
+><B
+CLASS="COMMAND"
+>clockdiff</B
+> shows difference in time modulo 24 days.
+ </P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN546"
+></A
+><H2
+>SEE ALSO</H2
+><P
+><A
+HREF="r3.html"
+><SPAN
+CLASS="CITEREFENTRY"
+><SPAN
+CLASS="REFENTRYTITLE"
+>ping</SPAN
+>(8)</SPAN
+></A
+>,
+<A
+HREF="r337.html"
+><SPAN
+CLASS="CITEREFENTRY"
+><SPAN
+CLASS="REFENTRYTITLE"
+>arping</SPAN
+>(8)</SPAN
+></A
+>,
+<A
+HREF="r687.html"
+><SPAN
+CLASS="CITEREFENTRY"
+><SPAN
+CLASS="REFENTRYTITLE"
+>tracepath</SPAN
+>(8)</SPAN
+></A
+>.</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN561"
+></A
+><H2
+>REFERENCES</H2
+><P
+>[1] <A
+NAME="CLOCKDIFF.ICMP-ECHO"
+></A
+>ICMP ECHO,
+<A
+HREF="ftp://ftp.isi.edu/in-notes/rfc792.txt"
+TARGET="_top"
+>RFC0792, page 14</A
+>.</P
+><P
+>[2] <A
+NAME="CLOCKDIFF.ICMP-TIMESTAMP"
+></A
+>ICMP TIMESTAMP,
+<A
+HREF="ftp://ftp.isi.edu/in-notes/rfc792.txt"
+TARGET="_top"
+>RFC0792, page 16</A
+>.</P
+><P
+>[3] <A
+NAME="CLOCKDIFF.IP-TIMESTAMP"
+></A
+>IP TIMESTAMP option,
+<A
+HREF="ftp://ftp.isi.edu/in-notes/rfc791.txt"
+TARGET="_top"
+>RFC0791, 3.1, page 16</A
+>.</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN572"
+></A
+><H2
+>AUTHOR</H2
+><P
+><B
+CLASS="COMMAND"
+>clockdiff</B
+> was compiled by
+<A
+HREF="mailto:kuznet@ms2.inr.ac.ru"
+TARGET="_top"
+>Alexey Kuznetsov
+&lt;kuznet@ms2.inr.ac.ru&gt;</A
+>. It was based on code borrowed
+from BSD <B
+CLASS="COMMAND"
+>timed</B
+> daemon.</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN578"
+></A
+><H2
+>SECURITY</H2
+><P
+><B
+CLASS="COMMAND"
+>clockdiff</B
+> requires <CODE
+CLASS="CONSTANT"
+>CAP_NET_RAWIO</CODE
+> capability
+to be executed. It is safe to be used as set-uid root.</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN583"
+></A
+><H2
+>AVAILABILITY</H2
+><P
+><B
+CLASS="COMMAND"
+>clockdiff</B
+> is part of <TT
+CLASS="FILENAME"
+>iputils</TT
+> package
+and the latest versions are  available in source form for anonymous ftp
+<A
+HREF="ftp://ftp.inr.ac.ru/ip-routing/iputils-current.tar.gz"
+TARGET="_top"
+>ftp://ftp.inr.ac.ru/ip-routing/iputils-current.tar.gz</A
+>.</P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="r337.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="r589.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>arping</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>rarpd</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

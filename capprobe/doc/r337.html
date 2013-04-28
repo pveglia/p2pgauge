@@ -1,0 +1,591 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>arping</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="System Manager's Manual: iputils"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="ping"
+HREF="r3.html"><LINK
+REL="NEXT"
+TITLE="clockdiff"
+HREF="r495.html"></HEAD
+><BODY
+CLASS="REFENTRY"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>System Manager's Manual: iputils</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="r3.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="r495.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><H1
+><A
+NAME="ARPING"
+></A
+>arping</H1
+><DIV
+CLASS="REFNAMEDIV"
+><A
+NAME="AEN342"
+></A
+><H2
+>Name</H2
+>arping&nbsp;--&nbsp;send ARP REQUEST to a neighbour host</DIV
+><DIV
+CLASS="REFSYNOPSISDIV"
+><A
+NAME="AEN345"
+></A
+><H2
+>Synopsis</H2
+><P
+><B
+CLASS="COMMAND"
+>arping</B
+>  [<CODE
+CLASS="OPTION"
+>-AbDfhqUV</CODE
+>] [-c <TT
+CLASS="REPLACEABLE"
+><I
+>count</I
+></TT
+>] [-w <TT
+CLASS="REPLACEABLE"
+><I
+>deadline</I
+></TT
+>] [-s <TT
+CLASS="REPLACEABLE"
+><I
+>source</I
+></TT
+>] {-I <TT
+CLASS="REPLACEABLE"
+><I
+>interface</I
+></TT
+>} {<TT
+CLASS="REPLACEABLE"
+><I
+>destination</I
+></TT
+>}</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN360"
+></A
+><H2
+>DESCRIPTION</H2
+><P
+>Ping <TT
+CLASS="REPLACEABLE"
+><I
+>destination</I
+></TT
+> on device <TT
+CLASS="REPLACEABLE"
+><I
+>interface</I
+></TT
+> by ARP packets,
+using source address <TT
+CLASS="REPLACEABLE"
+><I
+>source</I
+></TT
+>.</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN366"
+></A
+><H2
+>OPTIONS</H2
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><CODE
+CLASS="OPTION"
+>-A</CODE
+></DT
+><DD
+><P
+>The same as <CODE
+CLASS="OPTION"
+>-U</CODE
+>, but ARP REPLY packets used instead
+of ARP REQUEST.
+  </P
+></DD
+><DT
+><CODE
+CLASS="OPTION"
+>-b</CODE
+></DT
+><DD
+><P
+>Send only MAC level broadcasts. Normally <B
+CLASS="COMMAND"
+>arping</B
+> starts
+from sending broadcast, and switch to unicast after reply received.
+  </P
+></DD
+><DT
+><CODE
+CLASS="OPTION"
+><A
+NAME="ARPING.COUNT"
+></A
+>-c <TT
+CLASS="REPLACEABLE"
+><I
+>count</I
+></TT
+></CODE
+></DT
+><DD
+><P
+>Stop after sending <TT
+CLASS="REPLACEABLE"
+><I
+>count</I
+></TT
+> ARP REQUEST
+packets. With 
+<A
+HREF="r337.html#ARPING.DEADLINE"
+><TT
+CLASS="REPLACEABLE"
+><I
+>deadline</I
+></TT
+></A
+>
+option, <B
+CLASS="COMMAND"
+>arping</B
+> waits for
+<TT
+CLASS="REPLACEABLE"
+><I
+>count</I
+></TT
+> ARP REPLY packets, until the timeout expires.
+  </P
+></DD
+><DT
+><CODE
+CLASS="OPTION"
+>-D</CODE
+></DT
+><DD
+><P
+>Duplicate address detection mode (DAD). See 
+<A
+HREF="ftp://ftp.isi.edu/in-notes/rfc2131.txt"
+TARGET="_top"
+>RFC2131, 4.4.1</A
+>.
+Returns 0, if DAD succeeded i.e. no replies are received
+  </P
+></DD
+><DT
+><CODE
+CLASS="OPTION"
+>-f</CODE
+></DT
+><DD
+><P
+>Finish after the first reply confirming that target is alive.
+  </P
+></DD
+><DT
+><CODE
+CLASS="OPTION"
+><A
+NAME="OPT.INTERFACE"
+></A
+>-I <TT
+CLASS="REPLACEABLE"
+><I
+>interface</I
+></TT
+></CODE
+></DT
+><DD
+><P
+>Name of network device where to send ARP REQUEST packets. This option
+is required.
+  </P
+></DD
+><DT
+><CODE
+CLASS="OPTION"
+>-h</CODE
+></DT
+><DD
+><P
+>Print help page and exit.
+  </P
+></DD
+><DT
+><CODE
+CLASS="OPTION"
+>-q</CODE
+></DT
+><DD
+><P
+>Quiet output. Nothing is displayed.
+  </P
+></DD
+><DT
+><CODE
+CLASS="OPTION"
+><A
+NAME="OPT.SOURCE"
+></A
+>-s <TT
+CLASS="REPLACEABLE"
+><I
+>source</I
+></TT
+></CODE
+></DT
+><DD
+><P
+>IP source address to use in ARP packets.
+If this option is absent, source address is:
+   <P
+></P
+><UL
+><LI
+><P
+>In DAD mode (with option <CODE
+CLASS="OPTION"
+>-D</CODE
+>) set to 0.0.0.0.
+    </P
+></LI
+><LI
+><P
+>In Unsolicited ARP mode (with options <CODE
+CLASS="OPTION"
+>-U</CODE
+> or <CODE
+CLASS="OPTION"
+>-A</CODE
+>)
+set to <TT
+CLASS="REPLACEABLE"
+><I
+>destination</I
+></TT
+>.
+    </P
+></LI
+><LI
+><P
+>Otherwise, it is calculated from routing tables.
+    </P
+></LI
+></UL
+>
+  </P
+></DD
+><DT
+><CODE
+CLASS="OPTION"
+>-U</CODE
+></DT
+><DD
+><P
+>Unsolicited ARP mode to update neighbours' ARP caches.
+No replies are expected.
+  </P
+></DD
+><DT
+><CODE
+CLASS="OPTION"
+>-V</CODE
+></DT
+><DD
+><P
+>Print version of the program and exit.
+  </P
+></DD
+><DT
+><CODE
+CLASS="OPTION"
+><A
+NAME="ARPING.DEADLINE"
+></A
+>-w <TT
+CLASS="REPLACEABLE"
+><I
+>deadline</I
+></TT
+></CODE
+></DT
+><DD
+><P
+>Specify a timeout, in seconds, before
+<B
+CLASS="COMMAND"
+>arping</B
+>
+exits regardless of how many
+packets have been sent or received. In this case
+<B
+CLASS="COMMAND"
+>arping</B
+>
+does not stop after
+<A
+HREF="r337.html#ARPING.COUNT"
+><TT
+CLASS="REPLACEABLE"
+><I
+>count</I
+></TT
+></A
+>
+packet are sent, it waits either for
+<A
+HREF="r337.html#ARPING.DEADLINE"
+><TT
+CLASS="REPLACEABLE"
+><I
+>deadline</I
+></TT
+></A
+>
+expire or until
+<A
+HREF="r337.html#ARPING.COUNT"
+><TT
+CLASS="REPLACEABLE"
+><I
+>count</I
+></TT
+></A
+>
+probes are answered.
+  </P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN464"
+></A
+><H2
+>SEE ALSO</H2
+><P
+><A
+HREF="r3.html"
+><SPAN
+CLASS="CITEREFENTRY"
+><SPAN
+CLASS="REFENTRYTITLE"
+>ping</SPAN
+>(8)</SPAN
+></A
+>,
+<A
+HREF="r495.html"
+><SPAN
+CLASS="CITEREFENTRY"
+><SPAN
+CLASS="REFENTRYTITLE"
+>clockdiff</SPAN
+>(8)</SPAN
+></A
+>,
+<A
+HREF="r687.html"
+><SPAN
+CLASS="CITEREFENTRY"
+><SPAN
+CLASS="REFENTRYTITLE"
+>tracepath</SPAN
+>(8)</SPAN
+></A
+>.</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN479"
+></A
+><H2
+>AUTHOR</H2
+><P
+><B
+CLASS="COMMAND"
+>arping</B
+> was written by
+<A
+HREF="mailto:kuznet@ms2.inr.ac.ru"
+TARGET="_top"
+>Alexey Kuznetsov
+&lt;kuznet@ms2.inr.ac.ru&gt;</A
+>.</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN484"
+></A
+><H2
+>SECURITY</H2
+><P
+><B
+CLASS="COMMAND"
+>arping</B
+> requires <CODE
+CLASS="CONSTANT"
+>CAP_NET_RAWIO</CODE
+> capability
+to be executed. It is not recommended to be used as set-uid root,
+because it allows user to modify ARP caches of neighbour hosts.</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN489"
+></A
+><H2
+>AVAILABILITY</H2
+><P
+><B
+CLASS="COMMAND"
+>arping</B
+> is part of <TT
+CLASS="FILENAME"
+>iputils</TT
+> package
+and the latest versions are  available in source form for anonymous ftp
+<A
+HREF="ftp://ftp.inr.ac.ru/ip-routing/iputils-current.tar.gz"
+TARGET="_top"
+>ftp://ftp.inr.ac.ru/ip-routing/iputils-current.tar.gz</A
+>.</P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="r3.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="r495.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>ping</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>clockdiff</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

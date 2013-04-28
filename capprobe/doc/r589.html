@@ -1,0 +1,424 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>rarpd</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="System Manager's Manual: iputils"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="clockdiff"
+HREF="r495.html"><LINK
+REL="NEXT"
+TITLE="tracepath"
+HREF="r687.html"></HEAD
+><BODY
+CLASS="REFENTRY"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>System Manager's Manual: iputils</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="r495.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="r687.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><H1
+><A
+NAME="RARPD"
+></A
+>rarpd</H1
+><DIV
+CLASS="REFNAMEDIV"
+><A
+NAME="AEN594"
+></A
+><H2
+>Name</H2
+>rarpd&nbsp;--&nbsp;answer RARP REQUESTs</DIV
+><DIV
+CLASS="REFSYNOPSISDIV"
+><A
+NAME="AEN597"
+></A
+><H2
+>Synopsis</H2
+><P
+><B
+CLASS="COMMAND"
+>arping</B
+>  [<CODE
+CLASS="OPTION"
+>-aAvde</CODE
+>] [-b <TT
+CLASS="REPLACEABLE"
+><I
+>bootdir</I
+></TT
+>] [<TT
+CLASS="REPLACEABLE"
+><I
+>interface</I
+></TT
+>]</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN606"
+></A
+><H2
+>DESCRIPTION</H2
+><P
+>Listens
+<A
+HREF="ftp://ftp.isi.edu/in-notes/rfc903.txt"
+TARGET="_top"
+>RARP</A
+>
+requests from clients. Provided MAC address of client
+is found in <TT
+CLASS="FILENAME"
+>/etc/ethers</TT
+> database and
+obtained host name is resolvable to an IP address appropriate
+for attached network, <B
+CLASS="COMMAND"
+>rarpd</B
+> answers to client with RARPD
+reply carrying an IP address.</P
+><P
+>To allow multiple boot servers on the network <B
+CLASS="COMMAND"
+>rarpd</B
+>
+optionally checks for presence Sun-like bootable image in TFTP directory.
+It should have form <KBD
+CLASS="USERINPUT"
+>Hexadecimal_IP.ARCH</KBD
+>, f.e. to load
+sparc 193.233.7.98 <TT
+CLASS="FILENAME"
+>C1E90762.SUN4M</TT
+> is linked to
+an image appropriate for SUM4M in directory <TT
+CLASS="FILENAME"
+>/etc/tftpboot</TT
+>.</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN617"
+></A
+><H2
+>WARNING</H2
+><P
+>This facility is deeply obsoleted by
+<A
+HREF="ftp://ftp.isi.edu/in-notes/rfc951.txt"
+TARGET="_top"
+>BOOTP</A
+>
+and later
+<A
+HREF="ftp://ftp.isi.edu/in-notes/rfc2131.txt"
+TARGET="_top"
+>DHCP</A
+> protocols.
+However, some clients really still need this to boot.</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN622"
+></A
+><H2
+>OPTIONS</H2
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+><CODE
+CLASS="OPTION"
+>-a</CODE
+></DT
+><DD
+><P
+>Listen on all the interfaces. Currently it is an internal
+option, its function is overridden with <TT
+CLASS="REPLACEABLE"
+><I
+>interface</I
+></TT
+>
+argument. It should not be used.
+  </P
+></DD
+><DT
+><CODE
+CLASS="OPTION"
+>-A</CODE
+></DT
+><DD
+><P
+>Listen not only RARP but also ARP messages, some rare clients
+use ARP by some unknown reason.
+  </P
+></DD
+><DT
+><CODE
+CLASS="OPTION"
+>-v</CODE
+></DT
+><DD
+><P
+>Be verbose.
+  </P
+></DD
+><DT
+><CODE
+CLASS="OPTION"
+>-d</CODE
+></DT
+><DD
+><P
+>Debug mode. Do not go to background.
+  </P
+></DD
+><DT
+><CODE
+CLASS="OPTION"
+>-e</CODE
+></DT
+><DD
+><P
+>Do not check for presence of a boot image, reply if MAC address
+resolves to a valid IP address using <TT
+CLASS="FILENAME"
+>/etc/ethers</TT
+>
+database and DNS. 
+  </P
+></DD
+><DT
+><CODE
+CLASS="OPTION"
+>-b <TT
+CLASS="REPLACEABLE"
+><I
+>bootdir</I
+></TT
+></CODE
+></DT
+><DD
+><P
+>TFTP boot directory. Default is <TT
+CLASS="FILENAME"
+>/etc/tftpboot</TT
+>
+  </P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN659"
+></A
+><H2
+>SEE ALSO</H2
+><P
+><A
+HREF="r337.html"
+><SPAN
+CLASS="CITEREFENTRY"
+><SPAN
+CLASS="REFENTRYTITLE"
+>arping</SPAN
+>(8)</SPAN
+></A
+>,
+<A
+HREF="r822.html"
+><SPAN
+CLASS="CITEREFENTRY"
+><SPAN
+CLASS="REFENTRYTITLE"
+>tftpd</SPAN
+>(8)</SPAN
+></A
+>.</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN670"
+></A
+><H2
+>AUTHOR</H2
+><P
+><B
+CLASS="COMMAND"
+>rarpd</B
+> was written by
+<A
+HREF="mailto:kuznet@ms2.inr.ac.ru"
+TARGET="_top"
+>Alexey Kuznetsov
+&lt;kuznet@ms2.inr.ac.ru&gt;</A
+>.</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN675"
+></A
+><H2
+>SECURITY</H2
+><P
+><B
+CLASS="COMMAND"
+>rarpd</B
+> requires <CODE
+CLASS="CONSTANT"
+>CAP_NET_RAWIO</CODE
+> capability
+to listen and send RARP and ARP packets. It also needs <CODE
+CLASS="CONSTANT"
+>CAP_NET_ADMIN</CODE
+>
+to give to kernel hint for ARP resolution; this is not strictly required,
+but some (most of, to be more exact) clients are so badly broken that
+are not able to answer ARP before they are finally booted. This is
+not wonderful taking into account that clients using RARPD in 2002
+are all unsupported relic creatures of 90's and even earlier.</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN681"
+></A
+><H2
+>AVAILABILITY</H2
+><P
+><B
+CLASS="COMMAND"
+>rarpd</B
+> is part of <TT
+CLASS="FILENAME"
+>iputils</TT
+> package
+and the latest versions are  available in source form for anonymous ftp
+<A
+HREF="ftp://ftp.inr.ac.ru/ip-routing/iputils-current.tar.gz"
+TARGET="_top"
+>ftp://ftp.inr.ac.ru/ip-routing/iputils-current.tar.gz</A
+>.</P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="r495.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="r687.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>clockdiff</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>tracepath</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

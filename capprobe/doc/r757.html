@@ -1,0 +1,315 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>traceroute6</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="System Manager's Manual: iputils"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="tracepath"
+HREF="r687.html"><LINK
+REL="NEXT"
+TITLE="tftpd"
+HREF="r822.html"></HEAD
+><BODY
+CLASS="REFENTRY"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>System Manager's Manual: iputils</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="r687.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="r822.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><H1
+><A
+NAME="TRACEROUTE6"
+></A
+>traceroute6</H1
+><DIV
+CLASS="REFNAMEDIV"
+><A
+NAME="AEN762"
+></A
+><H2
+>Name</H2
+>traceroute6&nbsp;--&nbsp;traces path to a network host</DIV
+><DIV
+CLASS="REFSYNOPSISDIV"
+><A
+NAME="AEN765"
+></A
+><H2
+>Synopsis</H2
+><P
+><B
+CLASS="COMMAND"
+>traceroute6</B
+>  [<CODE
+CLASS="OPTION"
+>-dnrvV</CODE
+>] [-i <TT
+CLASS="REPLACEABLE"
+><I
+>interface</I
+></TT
+>] [-m <TT
+CLASS="REPLACEABLE"
+><I
+>max_ttl</I
+></TT
+>] [-p <TT
+CLASS="REPLACEABLE"
+><I
+>port</I
+></TT
+>] [-q <TT
+CLASS="REPLACEABLE"
+><I
+>max_probes</I
+></TT
+>] [-s <TT
+CLASS="REPLACEABLE"
+><I
+>source</I
+></TT
+>] [-w <TT
+CLASS="REPLACEABLE"
+><I
+>wait time</I
+></TT
+>] {<TT
+CLASS="REPLACEABLE"
+><I
+>destination</I
+></TT
+>} [<TT
+CLASS="REPLACEABLE"
+><I
+>size</I
+></TT
+>]</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN786"
+></A
+><H2
+>DESCRIPTION</H2
+><P
+>Description can be found in 
+<SPAN
+CLASS="CITEREFENTRY"
+><SPAN
+CLASS="REFENTRYTITLE"
+>traceroute</SPAN
+>(8)</SPAN
+>,
+all the references to IP replaced to IPv6. It is needless to copy
+the description from there.</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN792"
+></A
+><H2
+>SEE ALSO</H2
+><P
+><SPAN
+CLASS="CITEREFENTRY"
+><SPAN
+CLASS="REFENTRYTITLE"
+>traceroute</SPAN
+>(8)</SPAN
+>,
+<SPAN
+CLASS="CITEREFENTRY"
+><SPAN
+CLASS="REFENTRYTITLE"
+>tracepath</SPAN
+>(8)</SPAN
+>,
+<SPAN
+CLASS="CITEREFENTRY"
+><SPAN
+CLASS="REFENTRYTITLE"
+>ping</SPAN
+>(8)</SPAN
+>.</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN804"
+></A
+><H2
+>HISTORY</H2
+><P
+>This program has long history. Author of <B
+CLASS="COMMAND"
+>traceroute</B
+>
+is Van Jacobson and it first appeared in 1988. This clone is
+based on a port of <B
+CLASS="COMMAND"
+>traceroute</B
+> to IPv6 published
+in NRL IPv6 distribution in 1996. In turn, it was ported
+to Linux by Pedro Roque. After this it was kept in sync by    
+<A
+HREF="mailto:kuznet@ms2.inr.ac.ru"
+TARGET="_top"
+>Alexey Kuznetsov
+&lt;kuznet@ms2.inr.ac.ru&gt;</A
+>. And eventually entered
+<B
+CLASS="COMMAND"
+>iputils</B
+> package.</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN811"
+></A
+><H2
+>SECURITY</H2
+><P
+><B
+CLASS="COMMAND"
+>tracepath6</B
+> requires <CODE
+CLASS="CONSTANT"
+>CAP_NET_RAWIO</CODE
+> capability
+to be executed. It is safe to be used as set-uid root.</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN816"
+></A
+><H2
+>AVAILABILITY</H2
+><P
+><B
+CLASS="COMMAND"
+>traceroute6</B
+> is part of <TT
+CLASS="FILENAME"
+>iputils</TT
+> package
+and the latest versions are  available in source form for anonymous ftp
+<A
+HREF="ftp://ftp.inr.ac.ru/ip-routing/iputils-current.tar.gz"
+TARGET="_top"
+>ftp://ftp.inr.ac.ru/ip-routing/iputils-current.tar.gz</A
+>.</P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="r687.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="r822.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>tracepath</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>tftpd</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>
