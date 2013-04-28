@@ -61,7 +61,7 @@ char copyright[] =
 #include "ping_common.h"
 
 #include <netinet/ip.h>
-#include <netinet/ip_icmp.h>
+// #include <netinet/ip_icmp.h>
 
 
 #define	MAXIPLEN	60
@@ -365,17 +365,17 @@ main(int argc, char **argv)
 		exit(2);
 	}
 
-//	if (1) {
-//		struct icmp_filter filt;
-//		filt.data = ~((1<<ICMP_SOURCE_QUENCH)|
-//			      (1<<ICMP_DEST_UNREACH)|
-//			      (1<<ICMP_TIME_EXCEEDED)|
-//			      (1<<ICMP_PARAMETERPROB)|
-//			      (1<<ICMP_REDIRECT)|
-//			      (1<<ICMP_ECHOREPLY));
-//		if (setsockopt(icmp_sock, SOL_RAW, ICMP_FILTER, (char*)&filt, sizeof(filt)) == -1)
-//			perror("WARNING: setsockopt(ICMP_FILTER)");
-//	}
+	if (1) {
+		struct icmp_filter filt;
+		filt.data = ~((1<<ICMP_SOURCE_QUENCH)|
+			      (1<<ICMP_DEST_UNREACH)|
+			      (1<<ICMP_TIME_EXCEEDED)|
+			      (1<<ICMP_PARAMETERPROB)|
+			      (1<<ICMP_REDIRECT)|
+			      (1<<ICMP_ECHOREPLY));
+		if (setsockopt(icmp_sock, SOL_RAW, ICMP_FILTER, (char*)&filt, sizeof(filt)) == -1)
+			perror("WARNING: setsockopt(ICMP_FILTER)");
+	}
 
 	hold = 1;
 	if (setsockopt(icmp_sock, SOL_IP, IP_RECVERR, (char *)&hold, sizeof(hold)))
@@ -560,16 +560,16 @@ int receive_error_msg()
 
 		acknowledge(ntohs(icmph.un.echo.sequence));
 
-//		if (!working_recverr) {
-//			struct icmp_filter filt;
-//			working_recverr = 1;
-//			/* OK, it works. Add stronger filter. */
-//			filt.data = ~((1<<ICMP_SOURCE_QUENCH)|
-//				      (1<<ICMP_REDIRECT)|
-//				      (1<<ICMP_ECHOREPLY));
-//			if (setsockopt(icmp_sock, SOL_RAW, ICMP_FILTER, (char*)&filt, sizeof(filt)) == -1)
-//				perror("\rWARNING: setsockopt(ICMP_FILTER)");
-//		}
+		if (!working_recverr) {
+			struct icmp_filter filt;
+			working_recverr = 1;
+			/* OK, it works. Add stronger filter. */
+			filt.data = ~((1<<ICMP_SOURCE_QUENCH)|
+				      (1<<ICMP_REDIRECT)|
+				      (1<<ICMP_ECHOREPLY));
+			if (setsockopt(icmp_sock, SOL_RAW, ICMP_FILTER, (char*)&filt, sizeof(filt)) == -1)
+				perror("\rWARNING: setsockopt(ICMP_FILTER)");
+		}
 
 		net_errors++;
 		nerrors++;
@@ -1165,34 +1165,34 @@ int parsetos(char *str)
 
 #include <linux/filter.h>
 
-//void install_filter(void)
-//{
-//	static int once;
-//	static struct sock_filter insns[] = {
-//		BPF_STMT(BPF_LDX|BPF_B|BPF_MSH, 0), /* Skip IP header. F..g BSD... Look into ping6. */
-//		BPF_STMT(BPF_LD|BPF_H|BPF_IND, 4), /* Load icmp echo ident */
-//		BPF_JUMP(BPF_JMP|BPF_JEQ|BPF_K, 0xAAAA, 0, 1), /* Ours? */
-//		BPF_STMT(BPF_RET|BPF_K, ~0U), /* Yes, it passes. */
-//		BPF_STMT(BPF_LD|BPF_B|BPF_IND, 0), /* Load icmp type */
-//		BPF_JUMP(BPF_JMP|BPF_JEQ|BPF_K, ICMP_ECHOREPLY, 1, 0), /* Echo? */
-//		BPF_STMT(BPF_RET|BPF_K, 0xFFFFFFF), /* No. It passes. */
-//		BPF_STMT(BPF_RET|BPF_K, 0) /* Echo with wrong ident. Reject. */
-//	};
-//	static struct sock_fprog filter = {
-//		sizeof insns / sizeof(insns[0]),
-//		insns
-//	};
-//
-//	if (once)
-//		return;
-//	once = 1;
-//
-//	/* Patch bpflet for current identifier. */
-//	insns[2] = (struct sock_filter)BPF_JUMP(BPF_JMP|BPF_JEQ|BPF_K, __constant_htons(ident), 0, 1);
-//
-//	if (setsockopt(icmp_sock, SOL_SOCKET, SO_ATTACH_FILTER, &filter, sizeof(filter)))
-//		perror("WARNING: failed to install socket filter\n");
-//}
+void install_filter(void)
+{
+	static int once;
+	static struct sock_filter insns[] = {
+		BPF_STMT(BPF_LDX|BPF_B|BPF_MSH, 0), /* Skip IP header. F..g BSD... Look into ping6. */
+		BPF_STMT(BPF_LD|BPF_H|BPF_IND, 4), /* Load icmp echo ident */
+		BPF_JUMP(BPF_JMP|BPF_JEQ|BPF_K, 0xAAAA, 0, 1), /* Ours? */
+		BPF_STMT(BPF_RET|BPF_K, ~0U), /* Yes, it passes. */
+		BPF_STMT(BPF_LD|BPF_B|BPF_IND, 0), /* Load icmp type */
+		BPF_JUMP(BPF_JMP|BPF_JEQ|BPF_K, ICMP_ECHOREPLY, 1, 0), /* Echo? */
+		BPF_STMT(BPF_RET|BPF_K, 0xFFFFFFF), /* No. It passes. */
+		BPF_STMT(BPF_RET|BPF_K, 0) /* Echo with wrong ident. Reject. */
+	};
+	static struct sock_fprog filter = {
+		sizeof insns / sizeof(insns[0]),
+		insns
+	};
+
+	if (once)
+		return;
+	once = 1;
+
+	/* Patch bpflet for current identifier. */
+	insns[2] = (struct sock_filter)BPF_JUMP(BPF_JMP|BPF_JEQ|BPF_K, htons(ident), 0, 1);
+
+	if (setsockopt(icmp_sock, SOL_SOCKET, SO_ATTACH_FILTER, &filter, sizeof(filter)))
+		perror("WARNING: failed to install socket filter\n");
+}
 
 
 void usage(void)

@@ -1,5 +1,5 @@
 # Path to parent kernel include files directory
-KERNEL_INCLUDE=/usr/src/linux-headers-3.8.0-19-generic/include
+KERNEL_INCLUDE=/usr/src/linux-headers-3.8.0-19/include
 LIBC_INCLUDE=/usr/include
 
 DEFINES= 
