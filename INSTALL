@@ -1,17 +1,23 @@
 Quick install guide
 1) copy tcpdump.hack in /usr/local/bin or somewhere else in your path
 
-2) install maxmind C library and python library
- http://www.maxmind.com/download/geoip/api/c/GeoIP-latest.tar.gz
- http://www.maxmind.com/download/geoip/api/python/GeoIP-Python-latest.tar.gz
+2) In a debian-like system run:
+        sudo apt-get install gnuplot python-gnuplot python-qt4 python-qt4-dev qt4-dev-tools python-geoip python-qt4-dev pyqt4-dev-tools python-scipy traceroute libpcap-dev python-geoip
 
 3) download db GeoIPASNum.dat and copy it in /usr/local/share/GeoIP
         http://geolite.maxmind.com/download/geoip/database/asnum/GeoIPASNum.dat.gz
-
-4) In a debian-like system run:
-        sudo apt-get install gnuplot python-gnuplot python-qt4 python-qt4-dev qt4-dev-tools python-geoip python-qt4-dev pyqt4-dev-tools python-scipy traceroute
 
 5) run `make' in the main p2pgauge directory to build the GUI.
    Remember to run make after modification of the GUI with qt-designer!
 
 6) see README.txt for usage
+
+Troubleshooting:
+
+ *  tcpdump.hack: error while loading shared libraries: libpcap.so.0.8
+
+    recompile tcpdump.hack by entering in tcpdump_hack dir and issuing the standard
+    # ./configure
+    # make
+
+    cp resulting binary somewhere in your path or symlink it.
